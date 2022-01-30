@@ -4,7 +4,22 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
-let plug_dir='~/AppData/Local/nvim/plugged'
+
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    let plug_dir='~/.config/nvim/plugged'
+    let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.9/bin/')
+    let g:gitgutter_git_executable = "/usr/local/bin/git"
+    let snips_dir='~/.config/nvim/ultisnips'
+  elseif s:uname == "Linux\n"
+    let plug_dir='~/.config/nvim/plugged'
+    let snips_dir='~/.config/nvim/ultisnips'
+  else
+    let plug_dir='~/AppData/Local/nvim/plugged'
+  endif
+endif
+
 call plug#begin(plug_dir)
 
 "PLUGINS
@@ -32,7 +47,7 @@ Plug 'junegunn/fzf.vim'
 
 "   Code
 Plug 'preservim/nerdcommenter'
-Plug 'sirver/ultisnips'
+"Plug 'sirver/ultisnips'
 Plug 'Yggdroot/indentLine'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'jiangmiao/auto-pairs'
@@ -93,6 +108,7 @@ if exists('+termguicolors')
 endif
 
 
+
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 " GUI SETTINGS
@@ -137,7 +153,7 @@ nnoremap <leader>te :split<CR> :te pwsh.exe<CR>
 nmap <leader>rr :so %<CR>
 
 "   Git
-let g:gitgutter_git_executable = "C:/Program Files/Git/bin/git.exe"
+"let g:gitgutter_git_executable = "C:/Program Files/Git/bin/git.exe"
 "let g:gitgutter_git_executable = "~/Git/bin/git.exe"
 let g:gitgutter_async = 0
 let g:gitgutter_enabled = 1
@@ -228,7 +244,6 @@ noremap <leader>n :NERDTreeToggle<cr>
 let g:webdevicons_conceal_nerdtree_brackets = 1
 
 " Ultisnips
-let snips_dir='~/AppData/Local/nvim/ultisnips'
 let g:UltiSnipsDirectories=[snips_dir]
 let g:UltisnipsExpandTrigger="<tab>"
 let g:UltisnipsJumpForwardTrigger="<tab>"
