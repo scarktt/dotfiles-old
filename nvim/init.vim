@@ -1,10 +1,14 @@
-
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
+" Windows paths
+let plug_dir='~/AppData/Local/nvim/plugged'
+let snips_dir='~/AppData/Local/nvim/ultisnips'
+let g:python3_host_prog = expand('C:\Users\Scarlett\AppData\Local\Programs\Python\Python39\python.exe')
 
+" UNIX paths
 if has("unix")
   let s:uname = system("uname")
   if s:uname == "Darwin\n"
@@ -12,11 +16,9 @@ if has("unix")
     let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.9/bin/')
     let g:gitgutter_git_executable = "/usr/local/bin/git"
     let snips_dir='~/.config/nvim/ultisnips'
-  elseif s:uname == "Linux\n"
+  else
     let plug_dir='~/.config/nvim/plugged'
     let snips_dir='~/.config/nvim/ultisnips'
-  else
-    let plug_dir='~/AppData/Local/nvim/plugged'
   endif
 endif
 
@@ -67,16 +69,16 @@ call plug#end()
 "BASIC CONFIG
 let mapleader = " "
 set wrap linebreak nolist
-set number 				
-set relativenumber 		
-set mouse=a 			
-set noshowmode			
-syntax enable 			
-set encoding=utf-8 		
-set sw=4 				
-set nowrap				
-"set noswapfile			
-set clipboard=unnamed	
+set number
+set relativenumber
+set mouse=a
+set noshowmode
+syntax enable
+set encoding=utf-8
+set sw=4
+set nowrap
+"set noswapfile
+set clipboard=unnamed
 "set timeoutlen=300
 set updatetime=100
 set scrolloff=7
@@ -159,7 +161,7 @@ let g:gitgutter_async = 0
 let g:gitgutter_enabled = 1
 let g:gitgutter_signs = 1
 
-"   Deselect macthing string after search   
+"   Deselect macthing string after search
 map <Leader>. :noh<CR>
 
 "   Easy-motion
@@ -248,4 +250,3 @@ let g:UltiSnipsDirectories=[snips_dir]
 let g:UltisnipsExpandTrigger="<tab>"
 let g:UltisnipsJumpForwardTrigger="<tab>"
 let g:UltisnipsJumpBackwardTrigger="<s-tab>"
-
