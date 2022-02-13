@@ -31,13 +31,13 @@ Plug 'ashfinal/vim-one'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "   UI Looks
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 "   Functional
-Plug 'glepnir/dashboard-nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'voldikss/vim-floaterm'
@@ -46,10 +46,11 @@ Plug 'preservim/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'mhinz/vim-startify'
 
 "   Code
 Plug 'preservim/nerdcommenter'
-"Plug 'sirver/ultisnips'
+Plug 'sirver/ultisnips'
 Plug 'Yggdroot/indentLine'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'jiangmiao/auto-pairs'
@@ -68,9 +69,15 @@ call plug#end()
 
 "BASIC CONFIG
 let mapleader = " "
+let g:indentLine_leadingSpaceChar='·'
+let g:indentLine_leadingSpaceEnabled='1'
 set wrap linebreak nolist
 set number
-set relativenumber
+"set relativenumber
+set backupdir=~/.cache/vim
+set cc=80
+set mouse=v
+set list lcs=eol:⏎,trail:·,tab:»·
 set mouse=a
 set noshowmode
 syntax enable
@@ -86,12 +93,10 @@ set ignorecase
 " natural split settings
 set splitbelow
 set splitright
-"python specific
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
+filetype plugin indent on
 set autoindent
+autocmd FileType vue setlocal shiftwidth=2 tabstop=2
+autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 " auto-pairs
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 " font
@@ -110,7 +115,6 @@ if exists('+termguicolors')
 endif
 
 
-
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 " GUI SETTINGS
@@ -119,9 +123,11 @@ syntax on
 "colorscheme onedark
 colorscheme onehalfdark
 "let g:airline_theme='onedark'
-"let g:airline_theme='base16-spacemacs'
-"let g:airline_theme='onedark'
-let g:airline_theme='onehalfdark'
+"let g:airline_theme='deus'
+let g:airline_theme='badwolf'
+let g:airline_section_z = "%p%% : \ue0a1:%l/%L"
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_section_warning=""
 
 "   Tabs
 let g:airline#extensions#tabline#enabled=1
@@ -182,6 +188,18 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <F2> <Plug>(coc-rename)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json,yaml,python setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
 "nnoremap   <silent>   <F5>    :CocCommand python.execInTerminal<CR>
 "       completion
 inoremap <silent><expr> <TAB>
@@ -212,26 +230,8 @@ nmap <leader>fh :History<CR>
 
 "   Vim-Floaterm
 nnoremap   <silent>   <F1>    :FloatermNew --height=0.3 --wintype=split pwsh.exe<CR>
-nnoremap   <silent>   <F2>    :FloatermNew --height=0.3 --wintype=split ipython<CR>
-nnoremap   <silent>   <F3>    :FloatermNew --wintype=float lazygit<CR>
-
-"   Dashboard
-let g:dashboard_default_executive ='telescope'
-let g:dashboard_custom_header = [
-						\'','','','',
-						\'Welcome back Scarlett!',
-						\'','','','',
-	\]
-
-let g:dashboard_custom_shortcut={
-\ 'last_session'       : '      ',
-\ 'find_history'       : '      ',
-\ 'find_file'          : 'CTRL P',
-\ 'new_file'           : '      ',
-\ 'change_colorscheme' : '      ',
-\ 'find_word'          : '      ',
-\ 'book_marks'         : '      ',
-\ }
+nnoremap   <silent>   <F3>    :FloatermNew --height=0.3 --wintype=split ipython<CR>
+nnoremap   <silent>   <F4>    :FloatermNew --wintype=float lazygit<CR>
 
 "   Telescope
 nnoremap <silent><C-P> :Telescope find_files<cr>
@@ -244,9 +244,71 @@ vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 let g:NERDTreeMinimalUI=1
 noremap <leader>n :NERDTreeToggle<cr>
 let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " Ultisnips
 let g:UltiSnipsDirectories=[snips_dir]
 let g:UltisnipsExpandTrigger="<tab>"
 let g:UltisnipsJumpForwardTrigger="<tab>"
 let g:UltisnipsJumpBackwardTrigger="<s-tab>"
+
+" Vue
+let g:vim_vue_plugin_config = { 
+      \'syntax': {
+      \   'template': ['html'],
+      \   'script': ['javascript'],
+      \   'style': ['css'],
+      \},
+      \'full_syntax': [],
+      \'initial_indent': [],
+      \'attribute': 0,
+      \'keyword': 0,
+      \'foldexpr': 0,
+      \'debug': 0,
+      \}
+
+function! OnChangeVueSyntax(syntax)
+  echom 'Syntax is '.a:syntax
+  if a:syntax == 'html'
+    setlocal commentstring=<!--%s-->
+    setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
+  elseif a:syntax =~ 'css'
+    setlocal comments=s1:/*,mb:*,ex:*/ commentstring&
+  else
+    setlocal commentstring=//%s
+    setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+  endif
+endfunction
+
+"https://patorjk.com/software/taag/#p=display&h=1&v=1&f=ANSI%20Shadow&t=Pythonic%20Mode
+let g:startify_custom_header = [
+\ '',
+\ '     ▓▓▓▓▓▓▓       ',
+\ '    ▓▄▓▓▓▓▓▓▓      ',
+\ '        ▓▓▓▓▓  ▒▒      ██████╗ ██╗   ██╗████████╗██╗  ██╗ ██████╗ ███╗   ██╗██╗ ██████╗    ███╗   ███╗ ██████╗ ██████╗ ███████╗',
+\ '   ▓▓▓▓▓▓▓▓▓   ▒▒▒▒    ██╔══██╗╚██╗ ██╔╝╚══██╔══╝██║  ██║██╔═══██╗████╗  ██║██║██╔════╝    ████╗ ████║██╔═══██╗██╔══██╗██╔════╝',
+\ '  ▓▓▓▓▓▓      ▒▒▒▒▒▒   ██████╔╝ ╚████╔╝    ██║   ███████║██║   ██║██╔██╗ ██║██║██║         ██╔████╔██║██║   ██║██║  ██║█████╗  ',
+\ '   ▓▓▓▓   ▒▒▒▒▒▒▒▒▒▒   ██╔═══╝   ╚██╔╝     ██║   ██╔══██║██║   ██║██║╚██╗██║██║██║         ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ',
+\ '    ▓▓▓ ▒▒▒▒▒          ██║        ██║      ██║   ██║  ██║╚██████╔╝██║ ╚████║██║╚██████╗    ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗',
+\ '        ▒▒▒▒▒▒▀▒       ╚═╝        ╚═╝      ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝',
+\ '         ▒▒▒▒▒▒     ',
+\ '',
+\ '',
+\ ]
+
+
+"let g:startify_custom_header = [
+"\ '                                       ) (               ',
+"\ '  _____         __   __        ______ (  )           _   ',
+"\ ' / ____|       / _| / _|      |  ____| )(           | |  ', 
+"\ '| |      ___  | |_ | |_  ___  | |__    _  _ __  ___ | |_ ',
+"\ '| |     / _ \ |  _||  _|/ _ \ |  __|  | || `__|/ __|| __|',
+"\ '| |____| (_) || |  | | |  __/ | |     | || |   \__ \| |_ ',
+"\ ' \_____|\___/ |_|  |_|  \___| |_|     |_||_|   |___/ \__|',
+"\ '',
+"\ ]
+
