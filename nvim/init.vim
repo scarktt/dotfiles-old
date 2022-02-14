@@ -25,17 +25,22 @@ endif
 call plug#begin(plug_dir)
 
 "PLUGINS
-"   Themes
+"   Themes & UI
 Plug 'joshdick/onedark.vim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'ashfinal/vim-one'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'glepnir/zephyr-nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
 
-"   UI Looks
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"   Tabline & Statusline
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'romgrk/barbar.nvim'
 
 "   Functional
 Plug 'nvim-telescope/telescope.nvim'
@@ -61,6 +66,8 @@ Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'vim-python/python-syntax'
 
 call plug#end()
 
@@ -69,32 +76,29 @@ call plug#end()
 
 "BASIC CONFIG
 let mapleader = " "
-let g:indentLine_leadingSpaceChar='·'
-let g:indentLine_leadingSpaceEnabled='1'
+"let g:indentLine_leadingSpaceChar='·'
+"let g:indentLine_leadingSpaceEnabled='1'
+"set list lcs=eol:⏎,trail:·,tab:»·
 set wrap linebreak nolist
 set number
-"set relativenumber
 set backupdir=~/.cache/vim
 set cc=80
 set mouse=v
-set list lcs=eol:⏎,trail:·,tab:»·
 set mouse=a
 set noshowmode
 syntax enable
 set encoding=utf-8
 set sw=4
 set nowrap
-"set noswapfile
 set clipboard=unnamed
 "set timeoutlen=300
 set updatetime=100
 set scrolloff=7
 set ignorecase
-" natural split settings
 set splitbelow
 set splitright
-filetype plugin indent on
 set autoindent
+filetype plugin indent on
 autocmd FileType vue setlocal shiftwidth=2 tabstop=2
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 " auto-pairs
@@ -121,32 +125,95 @@ endif
 "   Themes
 syntax on
 "colorscheme onedark
-colorscheme onehalfdark
+"colorscheme tokyonight
+"colorscheme onehalfdark
+colorscheme zephyr
+
+"   Tabline and Statusline
+"
+"   	Airline
+"let g:airline#extensions#tabline#enabled=1
+"let g:airline#extensions#tabline#fnamemode=':t'
+"let g:airline#extensions#tabline#formatter = 'unique_tail'
+"let g:airline_right_alt_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_left_alt_sep= ' '
+"let g:airline_left_sep = ' '
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = ' '
 "let g:airline_theme='onedark'
 "let g:airline_theme='deus'
-let g:airline_theme='badwolf'
-let g:airline_section_z = "%p%% : \ue0a1:%l/%L"
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_section_warning=""
+"let g:airline_theme='badwolf'
+"let g:airline_section_z = "%p%% : \ue0a1:%l/%L"
+"let g:airline#extensions#whitespace#enabled = 0
+"let g:airline_section_warning=""
+"nmap <leader>1 :bp<CR>
+"nmap <leader>2 :bn<CR>
+"nmap <leader>bd :bd<CR>
 
-"   Tabs
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#fnamemode=':t'
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_right_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_left_alt_sep= ' '
-let g:airline_left_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = ' '
-nmap <leader>1 :bp<CR>
-nmap <leader>2 :bn<CR>
-nmap <leader>bd :bd<CR>
+"   	Lualine & Barbar
+lua << EOF
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'onedark',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
+EOF
+
+" Move to previous/next
+nnoremap <leader>1 :BufferPrevious<CR>
+nnoremap <leader>2 :BufferNext<CR>
+nnoremap <leader>bd :BufferClose<CR>
+nnoremap <leader>bp :BufferPin<CR>
+
+"Configure icons on the bufferline.
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.icon_separator_active = '▎'
+let bufferline.icon_separator_inactive = '▎'
+let bufferline.icon_close_tab = ''
+let bufferline.icon_close_tab_modified = '●'
+let bufferline.icon_pinned = '車'
+
+lua << EOF
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+EOF
 
 " FUNCTIONAL
 "   General Commands
+nnoremap <leader>gh :Startify<CR>
 nnoremap <leader>fs :w<CR>
-nnoremap <leader>q :q<CR>
+noremap <leader>q :q<CR>
 nnoremap <leader>qq :q!<CR>
 nnoremap <leader>wv :vsplit<CR>
 nnoremap <leader>ws :split<CR>
@@ -257,7 +324,7 @@ let g:UltisnipsJumpForwardTrigger="<tab>"
 let g:UltisnipsJumpBackwardTrigger="<s-tab>"
 
 " Vue
-let g:vim_vue_plugin_config = { 
+let g:vim_vue_plugin_config = {
       \'syntax': {
       \   'template': ['html'],
       \   'script': ['javascript'],
@@ -284,31 +351,44 @@ function! OnChangeVueSyntax(syntax)
   endif
 endfunction
 
+
+let g:startify_bookmarks = [
+\ {'v': 'C:\Users\Scarlett\AppData\Local\nvim\init.vim'},
+\ {'p': 'C:\Users\Scarlett\dev'},
+\]
+
+let g:startify_lists = [
+\ {'header': ['    Bookmarks'],    'type': 'bookmarks' },
+\ {'header': ['    Recent Files'], 'type': 'files'     },
+\ {'header': ['    Sessions'],     'type': 'sessions'  },
+\]
+
 "https://patorjk.com/software/taag/#p=display&h=1&v=1&f=ANSI%20Shadow&t=Pythonic%20Mode
-let g:startify_custom_header = [
-\ '',
-\ '     ▓▓▓▓▓▓▓       ',
-\ '    ▓▄▓▓▓▓▓▓▓      ',
-\ '        ▓▓▓▓▓  ▒▒      ██████╗ ██╗   ██╗████████╗██╗  ██╗ ██████╗ ███╗   ██╗██╗ ██████╗    ███╗   ███╗ ██████╗ ██████╗ ███████╗',
-\ '   ▓▓▓▓▓▓▓▓▓   ▒▒▒▒    ██╔══██╗╚██╗ ██╔╝╚══██╔══╝██║  ██║██╔═══██╗████╗  ██║██║██╔════╝    ████╗ ████║██╔═══██╗██╔══██╗██╔════╝',
-\ '  ▓▓▓▓▓▓      ▒▒▒▒▒▒   ██████╔╝ ╚████╔╝    ██║   ███████║██║   ██║██╔██╗ ██║██║██║         ██╔████╔██║██║   ██║██║  ██║█████╗  ',
-\ '   ▓▓▓▓   ▒▒▒▒▒▒▒▒▒▒   ██╔═══╝   ╚██╔╝     ██║   ██╔══██║██║   ██║██║╚██╗██║██║██║         ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ',
-\ '    ▓▓▓ ▒▒▒▒▒          ██║        ██║      ██║   ██║  ██║╚██████╔╝██║ ╚████║██║╚██████╗    ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗',
-\ '        ▒▒▒▒▒▒▀▒       ╚═╝        ╚═╝      ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝',
-\ '         ▒▒▒▒▒▒     ',
-\ '',
-\ '',
-\ ]
-
-
 "let g:startify_custom_header = [
-"\ '                                       ) (               ',
-"\ '  _____         __   __        ______ (  )           _   ',
-"\ ' / ____|       / _| / _|      |  ____| )(           | |  ', 
-"\ '| |      ___  | |_ | |_  ___  | |__    _  _ __  ___ | |_ ',
-"\ '| |     / _ \ |  _||  _|/ _ \ |  __|  | || `__|/ __|| __|',
-"\ '| |____| (_) || |  | | |  __/ | |     | || |   \__ \| |_ ',
-"\ ' \_____|\___/ |_|  |_|  \___| |_|     |_||_|   |___/ \__|',
+"\ '',
+"\ '     ▓▓▓▓▓▓▓       ',
+"\ '    ▓▄▓▓▓▓▓▓▓      ',
+"\ '        ▓▓▓▓▓  ▒▒      ██████╗ ██╗   ██╗████████╗██╗  ██╗ ██████╗ ███╗   ██╗██╗ ██████╗    ███╗   ███╗ ██████╗ ██████╗ ███████╗',
+"\ '   ▓▓▓▓▓▓▓▓▓   ▒▒▒▒    ██╔══██╗╚██╗ ██╔╝╚══██╔══╝██║  ██║██╔═══██╗████╗  ██║██║██╔════╝    ████╗ ████║██╔═══██╗██╔══██╗██╔════╝',
+"\ '  ▓▓▓▓▓▓      ▒▒▒▒▒▒   ██████╔╝ ╚████╔╝    ██║   ███████║██║   ██║██╔██╗ ██║██║██║         ██╔████╔██║██║   ██║██║  ██║█████╗  ',
+"\ '   ▓▓▓▓   ▒▒▒▒▒▒▒▒▒▒   ██╔═══╝   ╚██╔╝     ██║   ██╔══██║██║   ██║██║╚██╗██║██║██║         ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ',
+"\ '    ▓▓▓ ▒▒▒▒▒          ██║        ██║      ██║   ██║  ██║╚██████╔╝██║ ╚████║██║╚██████╗    ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗',
+"\ '        ▒▒▒▒▒▒▀▒       ╚═╝        ╚═╝      ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝',
+"\ '         ▒▒▒▒▒▒     ',
+"\ '',
 "\ '',
 "\ ]
 
+
+let g:startify_custom_header = [
+\ '                                       ) (               ',
+\ '  _____         __   __        ______ (  )           _   ',
+\ ' / ____|       / _| / _|      |  ____| )(           | |  ',
+\ '| |      ___  | |_ | |_  ___  | |__    _  _ __  ___ | |_ ',
+\ '| |     / _ \ |  _||  _|/ _ \ |  __|  | || `__|/ __|| __|',
+\ '| |____| (_) || |  | | |  __/ | |     | || |   \__ \| |_ ',
+\ ' \_____|\___/ |_|  |_|  \___| |_|     |_||_|   |___/ \__|',
+\ '',
+\ ]
+
+let g:python_highlight_all = 1
