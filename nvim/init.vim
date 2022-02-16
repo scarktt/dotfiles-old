@@ -28,7 +28,6 @@ else
 	\ {'v': 'C:\Users\Scarlett\AppData\Local\nvim\init.vim'},
 	\ {'d': 'C:\Users\Scarlett\dotfiles'},
 	\ {'p': 'C:\Users\Scarlett\dev'},
-	\ {'r': 'C:\Dentalrobot'},
 	\]
 endif
 
@@ -320,14 +319,14 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 "let g:UltisnipsJumpForwardTrigger="<tab>"
 "let g:UltisnipsJumpBackwardTrigger="<s-tab>"
 
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
-  highlight = {
-    enable = true,
-  },
-}
-EOF
+"lua <<EOF
+"require'nvim-treesitter.configs'.setup {
+  "ensure_installed = "all",
+  "highlight = {
+    "enable = true,
+  "},
+"}
+"EOF
 
 let g:startify_lists = [
 \ {'header': ['    Bookmarks'],    'type': 'bookmarks' },
