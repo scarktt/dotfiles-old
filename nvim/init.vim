@@ -8,10 +8,10 @@ if has("unix")
   let s:uname = system("uname")
 	" MacOS paths
   if s:uname == "Darwin\n"
-    let plug_dir='~/.config/nvim/plugged'
+    let plug_dir = '~/.config/nvim/plugged'
     let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.9/bin/')
     let g:gitgutter_git_executable = "/usr/local/bin/git"
-    let snips_dir='~/.config/nvim/ultisnips'
+    let snips_dir = '~/.config/nvim/ultisnips'
 
 		let g:startify_bookmarks = [
 		\ {'v': '~/.config/nvim/init.vim'},
@@ -20,14 +20,15 @@ if has("unix")
   endif
 else
 	" Windows paths
-	let plug_dir='~/AppData/Local/nvim/plugged'
-	let snips_dir='~/AppData/Local/nvim/ultisnips'
-	let g:python3_host_prog = expand('C:\Users\Scarlett\AppData\Local\Programs\Python\Python39\python.exe')
+	let plug_dir = $HOME . '/AppData/Local/nvim/plugged'
+	let snips_dir = $HOME . '/AppData/Local/nvim/ultisnips'
+	let g:python3_host_prog = expand($HOME . '\AppData\Local\Programs\Python\Python39\python.exe')
 
 	let g:startify_bookmarks = [
-	\ {'v': 'C:\Users\Scarlett\AppData\Local\nvim\init.vim'},
-	\ {'d': 'C:\Users\Scarlett\dotfiles'},
-	\ {'p': 'C:\Users\Scarlett\dev'},
+	\ {'v': $HOME . '\AppData\Local\nvim\init.vim'},
+	\ {'d': $HOME . '\dotfiles'},
+	\ {'p': $HOME . '\dev'},
+	\ {'r': $WORK },
 	\]
 endif
 
