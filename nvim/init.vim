@@ -8,10 +8,10 @@ if has("unix")
   let s:uname = system("uname")
 	" MacOS paths
   if s:uname == "Darwin\n"
-    let plug_dir = '~/.config/nvim/plugged'
+    let plug_dir='~/.config/nvim/plugged'
     let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.9/bin/')
     let g:gitgutter_git_executable = "/usr/local/bin/git"
-    let snips_dir = '~/.config/nvim/ultisnips'
+    let snips_dir='~/.config/nvim/ultisnips'
 
 		let g:startify_bookmarks = [
 		\ {'v': '~/.config/nvim/init.vim'},
@@ -20,8 +20,8 @@ if has("unix")
   endif
 else
 	" Windows paths
-	let plug_dir = $HOME . '/AppData/Local/nvim/plugged'
-	let snips_dir = $HOME . '/AppData/Local/nvim/ultisnips'
+	let plug_dir= $HOME . '\AppData\Local\nvim\plugged'
+	let snips_dir= $HOME . '\AppData\Local\nvim\ultisnips'
 	let g:python3_host_prog = expand($HOME . '\AppData\Local\Programs\Python\Python39\python.exe')
 
 	let g:startify_bookmarks = [
@@ -78,6 +78,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-surround'
+Plug 'vim-test/vim-test'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'godlygeek/tabular'
+Plug 'elzr/vim-json'
 
 call plug#end()
 
@@ -178,7 +182,7 @@ augroup exe_code
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('sho SignatureHelp')
 	" Execute python code
-	autocmd FileType python nnoremap <buffer> <silent><F12> :sp<CR> :term python3 %<CR> :startinsert<CR>
+	autocmd FileType python nnoremap <buffer> <silent><F12> :sp<CR> :term python %<CR> :startinsert<CR>
 	" Execute javascript code
 	autocmd FileType javascript nnoremap <buffer> <silent><F12> :sp<CR> :term node %<CR> :startinsert<CR>
 augroup end
@@ -227,6 +231,19 @@ nmap <C-_> <Plug>NERDCommenterToggle
 vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 
 nnoremap <expr> <leader>n g:NERDTree.IsOpen() ? ':NERDTreeClose<CR>' : @% == '' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
+
+" Tests
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+" Markdown
+nmap <silent> <leader>mp :MarkdownPreview<CR>
+nmap <silent> <leader>mP :MarkdownPreviewStop<CR>
+nmap <silent> <leader>mt :MarkdownPreviewToggle<CR>
+
+
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 " GUI SETTINGS
@@ -301,6 +318,10 @@ let g:gitgutter_async = 0
 let g:gitgutter_enabled = 1
 let g:gitgutter_signs = 1
 
+" Tests
+let test#strategy = 'neovim'
+let test#python#runner = 'pyunit'
+
 " restore place in file from previous session
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -334,7 +355,6 @@ let g:startify_lists = [
 \ {'header': ['    Recent Files'], 'type': 'files'     },
 \ {'header': ['    Sessions'],     'type': 'sessions'  },
 \]
-
 
 "let g:startify_custom_header = [
 "\ '                                       ) (               ',
