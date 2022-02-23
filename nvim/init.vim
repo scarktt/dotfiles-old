@@ -58,9 +58,12 @@ Plug 'voldikss/vim-floaterm'
 Plug 'windwp/vim-floaterm-repl'
 Plug 'preservim/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'dhruvmanila/telescope-bookmarks.nvim'
+Plug 'itchyny/vim-external'
+Plug 'nvim-lua/popup.nvim'
+Plug 'jvgrootveld/telescope-zoxide'
 
 "   Code
 Plug 'preservim/nerdcommenter'
@@ -224,7 +227,9 @@ nnoremap   <silent>   <F3>    :FloatermNew --height=0.3 --wintype=split ipython<
 nnoremap   <silent>   <F4>    :FloatermNew --wintype=float lazygit<CR>
 
 "   Telescope
-nnoremap <silent><C-P> :Telescope find_files<cr>
+nnoremap <silent><C-P> :Telescope find_files<CR>
+nnoremap <silent><C-B> :Telescope bookmarks<CR>
+nnoremap <silent><C-Z> :Telescope zoxide list<CR>
 
 " NERDCommenter
 nmap <C-_> <Plug>NERDCommenterToggle
@@ -355,6 +360,81 @@ let g:startify_lists = [
 \ {'header': ['    Recent Files'], 'type': 'files'     },
 \ {'header': ['    Sessions'],     'type': 'sessions'  },
 \]
+
+
+" Telescope
+" Note: To fix the error: ... This extension doesn't exist or is not installed: fzf
+" $ cd '.\AppData\Local\nvim\plugged\telescope-fzf-native.nvim\'
+" $ mkdir build (if it doesn't exisit)
+" $ gcc -O3 -Wall -Werror -fpic -shared src/fzf.c -o build/libfzf.dll
+" https://github.com/LunarVim/LunarVim/issues/1804#issuecomment-1029464761
+lua <<EOF
+require("telescope").setup {
+  extensions = {
+    fzf = {
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case", -- this is default
+    },
+    file_browser = {
+      hidden = true,
+    },
+    ["ui-select"] = {
+      require("telescope.themes").get_cursor(),
+    },
+    bookmarks = {
+      selected_browser = "brave",
+      url_open_command = "open",
+			url_open_plugin = "vim_external",
+    },
+  },
+  defaults = {
+    preview = {
+      timeout = 500,
+      msg_bg_fillchar = "",
+    },
+    multi_icon = " ",
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--hidden",
+    },
+    prompt_prefix = "❯ ",
+    selection_caret = "❯ ",
+    sorting_strategy = "ascending",
+    color_devicons = true,
+    layout_config = {
+      prompt_position = "bottom",
+      horizontal = {
+        width_padding = 0.04,
+        height_padding = 0.1,
+        preview_width = 0.6,
+      },
+      vertical = {
+        width_padding = 0.05,
+        height_padding = 1,
+        preview_height = 0.5,
+      },
+    },
+
+    mappings = {
+    },
+    dynamic_preview_title = true,
+    winblend = 4,
+  },
+}
+
+-- Extensions
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('bookmarks')
+require('telescope').load_extension('zoxide')
+EOF
 
 "let g:startify_custom_header = [
 "\ '                                       ) (               ',
