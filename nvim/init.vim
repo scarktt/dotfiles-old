@@ -22,7 +22,11 @@ else
 	" Windows paths
 	let plug_dir= $HOME . '\AppData\Local\nvim\plugged'
 	let snips_dir= $HOME . '\AppData\Local\nvim\ultisnips'
+
 	let g:python3_host_prog = expand($HOME . '\AppData\Local\Programs\Python\Python39\python.exe')
+	"if has('python') == 0
+		"let g:python3_host_prog = expand('C:\Users\Scarlett\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\python.exe')
+	"endif
 
 	let g:startify_bookmarks = [
 	\ {'v': $HOME . '\AppData\Local\nvim\init.vim'},
@@ -85,6 +89,8 @@ Plug 'vim-test/vim-test'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'godlygeek/tabular'
 Plug 'elzr/vim-json'
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -110,6 +116,8 @@ set ignorecase
 set splitbelow
 set splitright
 set autoindent
+
+set pyx=3
 
 syntax enable
 filetype plugin indent on
@@ -248,6 +256,9 @@ nmap <silent> <leader>mp :MarkdownPreview<CR>
 nmap <silent> <leader>mP :MarkdownPreviewStop<CR>
 nmap <silent> <leader>mt :MarkdownPreviewToggle<CR>
 
+" Emmet
+"let g:user_emmet_mode='n'
+let g:user_emmet_leader_key=','
 
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -342,9 +353,9 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 " Ultisnips
 " TODO: Fix trouble with coc auto completion on tab
 "let g:UltiSnipsDirectories=[snips_dir]
-"let g:UltisnipsExpandTrigger="<tab>"
-"let g:UltisnipsJumpForwardTrigger="<tab>"
-"let g:UltisnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltisnipsExpandTrigger="<enter>"
+"let g:UltisnipsJumpForwardTrigger="<enter>"
+"let g:UltisnipsJumpBackwardTrigger="<s-enter>"
 
 "lua <<EOF
 "require'nvim-treesitter.configs'.setup {
@@ -435,6 +446,11 @@ require('telescope').load_extension('fzf')
 require('telescope').load_extension('bookmarks')
 require('telescope').load_extension('zoxide')
 EOF
+
+" Text Conceal
+set conceallevel=2
+let g:tex_conceal="abdgm"
+let g:tex_conceal_frac=1
 
 "let g:startify_custom_header = [
 "\ '                                       ) (               ',
