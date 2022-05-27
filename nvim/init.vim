@@ -229,8 +229,17 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 nmap <F2> <Plug>(coc-rename)
 
 "   Files
-"   Open Windows Explorer in the current dir
-nmap <leader>f. :!start explorer /select,%:p<CR>
+"Open File Explorer in the current dir
+if has("unix")
+  let s:uname = system("uname")
+	" MacOS paths
+  if s:uname == "Darwin\n"
+	nmap <leader>f. :!open .<CR>
+  endif
+else
+	" Windows paths
+	nmap <leader>f. :!start explorer /select,%:p<CR>
+endif
 "   fzf
 nmap <leader>ff :Files<CR>
 nmap <leader>fh :History<CR>
