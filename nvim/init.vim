@@ -44,12 +44,13 @@ call plug#begin(plug_dir)
 "   Themes & UI
 Plug 'joshdick/onedark.vim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'tiagovla/tokyodark.nvim'
 Plug 'ashfinal/vim-one'
+Plug 'glepnir/zephyr-nvim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'glepnir/zephyr-nvim'
 
 "   Tabline & Statusline
 Plug 'nvim-lualine/lualine.nvim'
@@ -102,7 +103,7 @@ let maplocalleader = " "
 set wrap linebreak nolist
 set number
 set backupdir=~/.cache/vim
-set cc=80
+"set cc=80
 set mouse=v
 set mouse=a
 set noshowmode
@@ -126,7 +127,11 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 " font
-set guifont=JetBrainsMono\ NF:h14
+"set guifont=JetBrainsMono\ NF:h14
+"set guifont=CascadiaCodePLItalic\ 14
+"set guifont=Cascadia\ Code\ Italic\ 14
+set guifont=Cascadia\ Code\ Italic:h11
+"set guifontwide=Cascadia\ Code\ PL\ Light\ 10.2
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
@@ -140,14 +145,13 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-
 "==============================================================================
 "keybinding
 "==============================================================================
 " Move to previous/next
 nnoremap <leader>1 :BufferPrevious<CR>
 nnoremap <leader>2 :BufferNext<CR>
-nnoremap <leader>bd :BufferClose<CR>
+nnoremap <leader>bd :BufferClose!<CR>
 nnoremap <leader>bp :BufferPin<CR>
 " Re-order to previous/next
 nnoremap <leader>< :BufferMovePrevious<CR>
@@ -193,9 +197,11 @@ augroup exe_code
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('sho SignatureHelp')
 	" Execute python code
-	autocmd FileType python nnoremap <buffer> <silent><F12> :sp<CR> :term python %<CR> :startinsert<CR>
+	"autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal python %<CR> :startinsert<CR>
+	autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :!python %<CR>
 	" Execute javascript code
-	autocmd FileType javascript nnoremap <buffer> <silent><F12> :sp<CR> :term node %<CR> :startinsert<CR>
+	"autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal node %<CR> :startinsert<CR>
+	autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :!node %<CR>
 augroup end
 
 "       completion
@@ -268,7 +274,22 @@ syntax on
 "colorscheme onedark
 "colorscheme tokyonight
 "colorscheme onehalfdark
-colorscheme zephyr
+"colorscheme zephyr
+
+set background=dark
+colorscheme palenight
+let g:lightline = { 'colorscheme': 'palenight' }
+let g:airline_theme = "palenight"
+let g:palenight_terminal_italics=1
+
+" .vimrc
+"let g:tokyodark_transparent_background = 0
+"let g:tokyodark_enable_italic_comment = 1
+"let g:tokyodark_enable_italic = 1
+"let g:tokyodark_color_gamma = "1.0"
+"colorscheme tokyodark
+
+"hi Normal guibg=#11121D
 
 "   Tabline and Statusline
 "   	Lualine & Barbar
