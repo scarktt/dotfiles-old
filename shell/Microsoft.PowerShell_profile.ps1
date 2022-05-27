@@ -690,6 +690,10 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+t `
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
+# Nvim
+function Open-Nvim { & nvim $args }
+New-Alias -Name vi -Value Open-Nvim
+
 # Git Aliases
 function Get-GitStatus { & git status $args }
 New-Alias -Name s -Value Get-GitStatus
@@ -701,3 +705,9 @@ function Get-GitPush { & git push $args }
 New-Alias -Name gpush -Value Get-GitPush -Option AllScope
 function Get-GitPull { & git pull $args }
 New-Alias -Name gpull -Value Get-GitPull -Option AllScope
+
+# zoxide
+Invoke-Expression (& {
+    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+    (zoxide init --hook $hook powershell | Out-String)
+})
