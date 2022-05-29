@@ -47,6 +47,7 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'tiagovla/tokyodark.nvim'
 Plug 'ashfinal/vim-one'
 Plug 'glepnir/zephyr-nvim'
+Plug 'marko-cerovac/material.nvim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
@@ -197,8 +198,8 @@ augroup exe_code
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('sho SignatureHelp')
 	" Execute python code
-	"autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal python %<CR> :startinsert<CR>
-	autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :!python %<CR>
+	"autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal python3 %<CR> :startinsert<CR>
+	autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :!python3 %<CR>
 	" Execute javascript code
 	"autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal node %<CR> :startinsert<CR>
 	autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :!node %<CR>
@@ -284,12 +285,14 @@ syntax on
 "colorscheme tokyonight
 "colorscheme onehalfdark
 "colorscheme zephyr
+let g:material_style = "darker"
+colorscheme material
 
-set background=dark
-colorscheme palenight
-let g:lightline = { 'colorscheme': 'palenight' }
-let g:airline_theme = "palenight"
-let g:palenight_terminal_italics=1
+"set background=dark
+"colorscheme palenight
+"let g:lightline = { 'colorscheme': 'palenight' }
+"let g:airline_theme = "palenight"
+"let g:palenight_terminal_italics=1
 
 " .vimrc
 "let g:tokyodark_transparent_background = 0
@@ -493,14 +496,26 @@ let g:tex_conceal_frac=1
 "\ '',
 "\ ]
 
-let g:startify_custom_header = [
-\'               _..------.._     ',
-\'            .-;"-._____..-";    ',
-\'           (( |            |    ',
-\'            `))            ;    ',
-\'             ` \          /     ',
-\'            .-- `|._____.|-.    ',
-\'           (     |------|     ) ',
-\'            `-=..________..--`  ',
-\]
+"let g:startify_custom_header = [
+"\'               _..------.._     ',
+"\'            .-;"-._____..-";    ',
+"\'           (( |            |    ',
+"\'            `))            ;    ',
+"\'             ` \          /     ',
+"\'            .-- `|._____.|-.    ',
+"\'           (     |------|     ) ',
+"\'            `-=..________..--`  ',
+"\]
 
+let g:startify_custom_header = [
+	\'                    .==.',
+	\'                   ()''()-.',
+	\'        .---.       ;--; /',
+	\'      .`_:___". _..`.  _`.',
+	\'      |__ --==|`-``` \`...;',
+	\'      |  :||        |---|',
+	\'      |__| I=[|     .`    `.',
+	\'      / / ____|     :       `._',
+	\'     |-/.____.`      | :       :',
+	\'    /___\ /___\      `-`._----`',
+	\]
