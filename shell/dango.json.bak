@@ -1,0 +1,66 @@
+{
+    "final_space": true,
+    "console_title": true,
+    "console_title_style": "folder",
+    "blocks": [
+        {
+            "type": "prompt",
+            "alignment": "left",
+            "horizontal_offset": 0,
+            "vertical_offset": 0,
+            "segments": [
+                {
+                    "type": "session",
+                    "style": "diamond",
+                    "foreground": "#ffffff",
+                    "background": "#3A86FF",
+                    "leading_diamond": "\uE0B6",
+                    "trailing_diamond": "",
+                        "properties": {
+                        "template": "{{ .UserName }}"
+                    }
+                },
+                {
+                    "type": "path",
+                    "style": "powerline",
+                    "powerline_symbol": "",
+                    "invert_powerline": false,
+                    "foreground": "#ffffff",
+                    "background": "#FF479C",
+                    "leading_diamond": "",
+                    "trailing_diamond": "",
+                    "properties": {
+                        "prefix": "  ",
+                        "style": "folder"
+                    }
+                },
+                {
+                    "type": "git",
+                    "style": "powerline",
+                    "powerline_symbol": "",
+                    "invert_powerline": false,
+                    "foreground": "#ffffff",
+                    "background": "#906cff",
+                    "leading_diamond": "",
+                    "trailing_diamond": "",
+                    "properties": {
+                        "display_status": true,
+                        "display_stash_count": true,
+                        "display_upstream_icon": true
+                    }
+                },
+                {
+                    "type": "python",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#ffffff",
+                    "background": "#98BF64",
+                    "properties": {
+                        "display_mode": "always",
+                        "prefix": " \uE235 "
+                    }
+                }
+            ]
+        }
+    ]
+}

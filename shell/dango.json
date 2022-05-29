@@ -1,66 +1,58 @@
 {
-    "final_space": true,
-    "console_title": true,
-    "console_title_style": "folder",
-    "blocks": [
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
         {
-            "type": "prompt",
-            "alignment": "left",
-            "horizontal_offset": 0,
-            "vertical_offset": 0,
-            "segments": [
-                {
-                    "type": "session",
-                    "style": "diamond",
-                    "foreground": "#ffffff",
-                    "background": "#3A86FF",
-                    "leading_diamond": "\uE0B6",
-                    "trailing_diamond": "",
-                        "properties": {
-                        "template": "{{ .UserName }}"
-                    }
-                },
-                {
-                    "type": "path",
-                    "style": "powerline",
-                    "powerline_symbol": "",
-                    "invert_powerline": false,
-                    "foreground": "#ffffff",
-                    "background": "#FF479C",
-                    "leading_diamond": "",
-                    "trailing_diamond": "",
-                    "properties": {
-                        "prefix": "  ",
-                        "style": "folder"
-                    }
-                },
-                {
-                    "type": "git",
-                    "style": "powerline",
-                    "powerline_symbol": "",
-                    "invert_powerline": false,
-                    "foreground": "#ffffff",
-                    "background": "#906cff",
-                    "leading_diamond": "",
-                    "trailing_diamond": "",
-                    "properties": {
-                        "display_status": true,
-                        "display_stash_count": true,
-                        "display_upstream_icon": true
-                    }
-                },
-                {
-                    "type": "python",
-                    "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
-                    "foreground": "#ffffff",
-                    "background": "#98BF64",
-                    "properties": {
-                        "display_mode": "always",
-                        "prefix": " \uE235 "
-                    }
-                }
-            ]
+          "background": "#3A86FF",
+          "foreground": "#ffffff",
+          "leading_diamond": "\ue0b6",
+          "style": "diamond",
+          "template": " {{ .UserName }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "session"
+        },
+        {
+          "background": "#FF479C",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "style": "folder"
+          },
+          "style": "powerline",
+          "template": " \ue5ff {{ .Path }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "path"
+        },
+        {
+          "background": "#906cff",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "powerline",
+          "template": " {{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }} ",
+          "type": "git"
+        },
+        {
+          "background": "#98BF64",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "display_mode": "always"
+          },
+          "style": "powerline",
+          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
+          "type": "python"
         }
-    ]
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 2
 }
