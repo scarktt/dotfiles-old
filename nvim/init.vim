@@ -70,6 +70,8 @@ Plug 'dhruvmanila/telescope-bookmarks.nvim'
 Plug 'itchyny/vim-external'
 Plug 'nvim-lua/popup.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }	
+Plug 'junegunn/fzf.vim'	
 
 "   Code
 Plug 'preservim/nerdcommenter'
@@ -123,16 +125,14 @@ set pyx=3
 
 syntax enable
 filetype plugin indent on
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
-autocmd FileType vim setlocal shiftwidth=2 tabstop=2
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2	
+autocmd FileType html setlocal shiftwidth=2 tabstop=2	
+autocmd FileType css setlocal shiftwidth=2 tabstop=2	
+autocmd FileType vim setlocal shiftwidth=2 tabstop=2	
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 " font
-"set guifont=JetBrainsMono\ NF:h14
-"set guifont=CascadiaCodePLItalic\ 14
-"set guifont=Cascadia\ Code\ Italic\ 14
 set guifont=Cascadia\ Code\ Italic:h11
-"set guifontwide=Cascadia\ Code\ PL\ Light\ 10.2
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
@@ -150,8 +150,8 @@ endif
 "keybinding
 "==============================================================================
 " Move to previous/next
-nnoremap <leader>1 :BufferPrevious<CR>
-nnoremap <leader>2 :BufferNext<CR>
+nnoremap <leader>1 :BufferPrevious<CR> :cd %:h<CR>	
+nnoremap <leader>2 :BufferNext<CR> :cd %:h<CR>	
 nnoremap <leader>bd :BufferClose!<CR>
 nnoremap <leader>bp :BufferPin<CR>
 " Re-order to previous/next
@@ -194,7 +194,7 @@ nnoremap <silent>ff :CocCommand formatJson.selected<CR>
 augroup exe_code
   autocmd!
   " Setup formatexpr specified filetype(s).
-	autocmd FileType typescript,json,yaml,python setl formatexpr=CocAction('formatSelected')
+	autocmd FileType javascript,typescript,json,yaml,python setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('sho SignatureHelp')
 	" Execute python code
