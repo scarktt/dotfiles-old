@@ -20,6 +20,7 @@ if has("unix")
   endif
 else
 	" Windows paths
+	let $PATH = "C:\\Program Files\\Git\\usr\\bin;" . $PATH
 	let plug_dir= $HOME . '\AppData\Local\nvim\plugged'
 	let snips_dir= $HOME . '\AppData\Local\nvim\ultisnips'
 
@@ -173,6 +174,11 @@ nmap <leader>rr :so %<CR>
 "   Deselect macthing string after search
 map <Leader>. :noh<CR>
 
+" Replace all instances selected with *
+nnoremap <Leader>r :%s///g<Left><Left>
+" Replace all instances that are ONLY inside of visually selected range
+xnoremap <Leader>r :s///g<Left><Left>
+
 "   Easy-motion
 map <Leader> <Plug>(easymotion-prefix)
 "       Move to word
@@ -242,8 +248,9 @@ else
 	nmap <leader>f. :!start explorer /select,%:p<CR>
 endif
 "   fzf
-nmap <leader>ff :Files<CR>
-nmap <leader>fh :History<CR>
+nnoremap <leader>ff :Files %:p:h<CR>
+nnoremap <leader>fh :History<CR>
+let g:fzf_layout = { 'down': '40%' }
 
 "   Vim-Floaterm
 nnoremap   <silent>   <F1>    :FloatermNew --height=0.3 --wintype=split pwsh.exe<CR>
@@ -518,4 +525,4 @@ let g:startify_custom_header = [
 	\'      / / ____|     :       `._',
 	\'     |-/.____.`      | :       :',
 	\'    /___\ /___\      `-`._----`',
-	\]
+	
