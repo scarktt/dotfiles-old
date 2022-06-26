@@ -95,6 +95,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'godlygeek/tabular'
 Plug 'elzr/vim-json'
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+Plug 'ap/vim-css-color'
 
 call plug#end()
 
@@ -303,6 +304,22 @@ let g:user_emmet_settings = {
 \    },
 \  },
 \}
+
+" HTML & CSS
+function! JumpToCSS()
+  let id_pos = searchpos("id", "nb", line('.'))[1]
+  let class_pos = searchpos("class", "nb", line('.'))[1]
+
+  if class_pos > 0 || id_pos > 0
+    if class_pos < id_pos
+      execute ":vim '#".expand('<cword>')."' **/*.css"
+    elseif class_pos > id_pos
+      execute ":vim '.".expand('<cword>')."' **/*.css"
+    endif
+  endif
+endfunction
+
+nnoremap <silent> gs :call JumpToCSS()<CR>
 
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -546,4 +563,4 @@ let g:startify_custom_header = [
 	\'      / / ____|     :       `._',
 	\'     |-/.____.`      | :       :',
 	\'    /___\ /___\      `-`._----`',
-	\]
+	
