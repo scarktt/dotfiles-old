@@ -95,7 +95,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'godlygeek/tabular'
 Plug 'elzr/vim-json'
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
-Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -282,6 +281,28 @@ nmap <silent> <leader>mt :MarkdownPreviewToggle<CR>
 " Emmet
 "let g:user_emmet_mode='n'
 let g:user_emmet_leader_key=','
+
+let g:user_emmet_settings = {
+\  'variables': {'lang': 'en', 'charset': 'UTF-8'},
+\  'html': {
+\    'default_attributes': {
+\      'option': {'value': v:null},
+\      'textarea': {'id': v:null, 'name': v:null, 'cols': 10, 'rows': 10},
+\    },
+\    'snippets': {
+\      'html:5': "<!DOCTYPE html>\n"
+\              ."<html lang=\"${lang}\">\n"
+\              ."<head>\n"
+\              ."\t<meta charset=\"${charset}\">\n"
+\              ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"
+\              ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+\              ."\t<title></title>\n"
+\              ."</head>\n"
+\              ."<body>\n\t${child}|\n</body>\n"
+\              ."</html>",
+\    },
+\  },
+\}
 
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -525,4 +546,4 @@ let g:startify_custom_header = [
 	\'      / / ____|     :       `._',
 	\'     |-/.____.`      | :       :',
 	\'    /___\ /___\      `-`._----`',
-	
+	\]
