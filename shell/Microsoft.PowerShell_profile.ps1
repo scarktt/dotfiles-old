@@ -690,6 +690,29 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+t `
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
+Function Touch-File
+{
+    $file = $args[0]
+    if($file -eq $null) {
+        throw "No filename supplied"
+    }
+
+    if(Test-Path $file)
+    {
+        (Get-ChildItem $file).LastWriteTime = Get-Date
+    }
+    else
+    {
+        echo $null > $file
+    }
+}
+
+# zoxide
+Invoke-Expression (& {
+    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+    (zoxide init --hook $hook powershell | Out-String)
+})
+
 # Nvim
 function Open-Nvim { & nvim $args }
 New-Alias -Name vi -Value Open-Nvim
@@ -706,8 +729,6 @@ New-Alias -Name gpush -Value Get-GitPush -Option AllScope
 function Get-GitPull { & git pull $args }
 New-Alias -Name gpull -Value Get-GitPull -Option AllScope
 
-# zoxide
-Invoke-Expression (& {
-    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-    (zoxide init --hook $hook powershell | Out-String)
-})
+# touch linux like
+New-Alias -Name touch Touch-File
+
