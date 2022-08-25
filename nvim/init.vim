@@ -1,4 +1,4 @@
-" Run PlugInstall if there are missing plugins
+" Ru" Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
@@ -53,6 +53,8 @@ Plug 'drewtempelmeyer/palenight.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ayu-theme/ayu-vim'
+Plug 'EdenEast/nightfox.nvim', { 'tag': 'v1.0.0' }
 
 "   Tabline & Statusline
 Plug 'nvim-lualine/lualine.nvim'
@@ -73,6 +75,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }	
 Plug 'junegunn/fzf.vim'	
+Plug 'junegunn/goyo.vim'
 
 "   Code
 Plug 'preservim/nerdcommenter'
@@ -104,16 +107,23 @@ call plug#end()
 "==============================================================================
 let mapleader = " "
 let maplocalleader = " "
-set wrap linebreak nolist
+"set wrap linebreak nolist
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+set sw=4
+set clipboard=unnamed
+set relativenumber
 set number
+set formatoptions-=cro
 set backupdir=~/.cache/vim
 "set cc=80
 set mouse=v
 set mouse=a
 set noshowmode
-set encoding=utf-8
+set encoding=UTF-8
+set guifont=*
 set sw=4
-set nowrap
 set clipboard=unnamed
 set updatetime=100
 set scrolloff=7
@@ -133,7 +143,8 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 " font
-set guifont=Cascadia\ Code\ Italic:h11
+"set guifont=Cascadia\ Code\ Italic:h11
+set guifont=Dank\ Mono\ Italic:h12
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
@@ -174,6 +185,9 @@ nmap <leader>rr :so %<CR>
 "   Deselect macthing string after search
 map <Leader>. :noh<CR>
 
+"   Distraction free
+nnoremap <leader>g :Goyo<CR>
+
 " Replace all instances selected with *
 nnoremap <Leader>r :%s///g<Left><Left>
 " Replace all instances that are ONLY inside of visually selected range
@@ -204,10 +218,8 @@ augroup exe_code
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('sho SignatureHelp')
 	" Execute python code
-	"autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal python3 %<CR> :startinsert<CR>
-	autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :!python3 %<CR>
+	autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :!python %<CR>
 	" Execute javascript code
-	"autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :split \| terminal node %<CR> :startinsert<CR>
 	autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :!node %<CR>
 augroup end
 
@@ -272,7 +284,7 @@ nnoremap <expr> <leader>n g:NERDTree.IsOpen() ? ':NERDTreeClose<CR>' : @% == '' 
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+"nmap <silent> <leader>g :TestVisit<CR>
 
 " Markdown
 nmap <silent> <leader>mp :MarkdownPreview<CR>
@@ -321,6 +333,9 @@ endfunction
 
 nnoremap <silent> gs :call JumpToCSS()<CR>
 
+" Python Import Sort
+let g:vim_isort_map = '<C-i>'
+
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 " GUI SETTINGS
@@ -330,21 +345,14 @@ syntax on
 "colorscheme tokyonight
 "colorscheme onehalfdark
 "colorscheme zephyr
-let g:material_style = "darker"
-colorscheme material
+"let g:material_style = "darker"
+"colorscheme material
+"colorscheme nightfox
+colorscheme nordfox
 
-"set background=dark
-"colorscheme palenight
-"let g:lightline = { 'colorscheme': 'palenight' }
-"let g:airline_theme = "palenight"
-"let g:palenight_terminal_italics=1
-
-" .vimrc
-"let g:tokyodark_transparent_background = 0
-"let g:tokyodark_enable_italic_comment = 1
-"let g:tokyodark_enable_italic = 1
-"let g:tokyodark_color_gamma = "1.0"
-"colorscheme tokyodark
+"let ayucolor="light"
+"let ayucolor="dark"
+"colorscheme ayu
 
 "hi Normal guibg=#11121D
 
@@ -354,7 +362,8 @@ lua << EOF
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'onedark',
+		theme = 'onedark',
+		-- theme = 'auto',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
@@ -380,6 +389,7 @@ require('lualine').setup {
   extensions = {}
 }
 EOF
+
 
 "Configure icons on the bufferline.
 let bufferline = get(g:, 'bufferline', {})
@@ -435,14 +445,16 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 "let g:UltisnipsJumpForwardTrigger="<enter>"
 "let g:UltisnipsJumpBackwardTrigger="<s-enter>"
 
-"lua <<EOF
-"require'nvim-treesitter.configs'.setup {
-  "ensure_installed = "all",
-  "highlight = {
-    "enable = true,
-  "},
-"}
-"EOF
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+	ensure_installed = { "lua", "python", "javascript", "typescript", "vue", "css", "html", "json", "markdown", "regex", "vim", "yaml" },
+	sync_install = false,
+  auto_install = true,
+	highlight = {
+		enable = true,
+	},
+}
+EOF
 
 let g:startify_lists = [
 \ {'header': ['    Bookmarks'],    'type': 'bookmarks' },
@@ -553,14 +565,17 @@ let g:tex_conceal_frac=1
 "\]
 
 let g:startify_custom_header = [
-	\'                    .==.',
-	\'                   ()''()-.',
-	\'        .---.       ;--; /',
-	\'      .`_:___". _..`.  _`.',
-	\'      |__ --==|`-``` \`...;',
-	\'      |  :||        |---|',
-	\'      |__| I=[|     .`    `.',
-	\'      / / ____|     :       `._',
-	\'     |-/.____.`      | :       :',
-	\'    /___\ /___\      `-`._----`',
-	
+    \' ⣿⡇⣿⣿⣿⠛⠁⣴⣿⡿⠿⠧⠹⠿⠘⣿⣿⣿⡇⢸⡻⣿⣿⣿⣿⣿⣿⣿ ',
+    \' ⢹⡇⣿⣿⣿⠄⣞⣯⣷⣾⣿⣿⣧⡹⡆⡀⠉⢹⡌⠐⢿⣿⣿⣿⡞⣿⣿⣿ ',
+    \' ⣾⡇⣿⣿⡇⣾⣿⣿⣿⣿⣿⣿⣿⣿⣄⢻⣦⡀⠁⢸⡌⠻⣿⣿⣿⡽⣿⣿ ',
+    \' ⡇⣿⠹⣿⡇⡟⠛⣉⠁⠉⠉⠻⡿⣿⣿⣿⣿⣿⣦⣄⡉⠂⠈⠙⢿⣿⣝⣿ ',
+    \' ⠤⢿⡄⠹⣧⣷⣸⡇⠄⠄⠲⢰⣌⣾⣿⣿⣿⣿⣿⣿⣶⣤⣤⡀⠄⠈⠻⢮ ',
+    \'   ⣧⠄⢘⢻⣿⡇⢀⣀⠄⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠄⢀ ',
+    \'   ⣿⡆⢸⣿⣿⣿⣬⣭⣴⣿⣿⣿⣿⣿⣿⣿⣯⠝⠛⠛⠙⢿⡿⠃⠄⢸ ',
+    \'   ⢿⣿⡀⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⡾⠁⢠⡇⢀ ',
+    \'   ⢸⣿⡇⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⣫⣻⡟⢀⠄⣿⣷⣾ ',
+    \'   ⢸⣿⡇⠄⠈⠙⠿⣿⣿⣿⣮⣿⣿⣿⣿⣿⣿⣿⣿⡿⢠⠊⢀⡇⣿⣿ ',
+    \'    ⣿⡇⢀⡲⠄⠄⠈⠙⠻⢿⣿⣿⠿⠿⠟⠛⠋⠁⣰⠇ ⢸⣿⣿⣿ ',
+    \'    ⣿⡇⢬⡻⡇⡄⠄⠄⠄⡰⢖⠔⠉⠄⠄⠄⠄⣼⠏  ⢸⣿⣿⣿ ',
+    \'    ⣿⡇⠄⠙⢌⢷⣆⡀⡾⡣⠃⠄⠄⠄⠄⠄⣼⡟    ⢿⣿⣿ ',
+ 
