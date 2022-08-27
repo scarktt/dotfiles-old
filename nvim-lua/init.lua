@@ -3,7 +3,6 @@ require('globals.options')
 require('globals.remaps')
 
 require('plugins')
-require('settings')
 
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = { "python", "javascript", "typescript", "vue", "css", "html", "json", "markdown", "regex", "vim", "yaml" },
@@ -11,7 +10,6 @@ require'nvim-treesitter.configs'.setup {
   	auto_install = true,
 	highlight = {
 		enable = true,
-		--disable = { "lua" },
 	},
 }
 
