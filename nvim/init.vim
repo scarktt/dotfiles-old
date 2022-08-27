@@ -1,4 +1,4 @@
-" Ru" Run PlugInstall if there are missing plugins
+ Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
@@ -177,7 +177,8 @@ noremap <leader>q :q<CR>
 nnoremap <leader>qq :q!<CR>
 nnoremap <leader>wv :vsplit<CR>
 nnoremap <leader>ws :split<CR>
-nnoremap <leader>te :split<CR> :te pwsh.exe<CR>
+nnoremap <leader>th :split<CR> :te pwsh.exe<CR>
+nnoremap <leader>tv :vsplit<CR> :te pwsh.exe<CR>
 
 "   Reload Config
 nmap <leader>rr :so %<CR>
@@ -192,6 +193,10 @@ nnoremap <leader>g :Goyo<CR>
 nnoremap <Leader>r :%s///g<Left><Left>
 " Replace all instances that are ONLY inside of visually selected range
 xnoremap <Leader>r :s///g<Left><Left>
+
+"   Terminal
+tnoremap <Esc> <C-\><C-n>
+tnoremap <silent>q <C-D><C-\><C-N>ZQ
 
 "   Easy-motion
 map <Leader> <Plug>(easymotion-prefix)
@@ -221,6 +226,8 @@ augroup exe_code
 	autocmd FileType python nnoremap <buffer> <silent><F12> :w<CR> :!python %<CR>
 	" Execute javascript code
 	autocmd FileType javascript nnoremap <buffer> <silent><F12> :w<CR> :!node %<CR>
+	" Execute lua code
+	autocmd FileType lua nnoremap <buffer> <silent><F12> :w<CR> :!lua %<CR>
 augroup end
 
 "       completion
@@ -445,16 +452,17 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 "let g:UltisnipsJumpForwardTrigger="<enter>"
 "let g:UltisnipsJumpBackwardTrigger="<s-enter>"
 
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-	ensure_installed = { "lua", "python", "javascript", "typescript", "vue", "css", "html", "json", "markdown", "regex", "vim", "yaml" },
-	sync_install = false,
-  auto_install = true,
-	highlight = {
-		enable = true,
-	},
-}
-EOF
+"lua <<EOF
+"require'nvim-treesitter.configs'.setup {
+	"ensure_installed = { "python", "javascript", "typescript", "vue", "css", "html", "json", "markdown", "regex", "vim", "yaml" },
+	"sync_install = false,
+  "auto_install = true,
+	"highlight = {
+		"enable = true,
+		"--disable = { "lua" },
+	"},
+"}
+"EOF
 
 let g:startify_lists = [
 \ {'header': ['    Bookmarks'],    'type': 'bookmarks' },
@@ -578,4 +586,4 @@ let g:startify_custom_header = [
     \'    ⣿⡇⢀⡲⠄⠄⠈⠙⠻⢿⣿⣿⠿⠿⠟⠛⠋⠁⣰⠇ ⢸⣿⣿⣿ ',
     \'    ⣿⡇⢬⡻⡇⡄⠄⠄⠄⡰⢖⠔⠉⠄⠄⠄⠄⣼⠏  ⢸⣿⣿⣿ ',
     \'    ⣿⡇⠄⠙⢌⢷⣆⡀⡾⡣⠃⠄⠄⠄⠄⠄⣼⡟    ⢿⣿⣿ ',
- 
+  
