@@ -74,6 +74,16 @@ _G.packer_plugins = {
     path = "C:\\Users\\Scarlett\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\barbar.nvim",
     url = "https://github.com/romgrk/barbar.nvim"
   },
+  fzf = {
+    loaded = true,
+    path = "C:\\Users\\Scarlett\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fzf",
+    url = "https://github.com/junegunn/fzf"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\Scarlett\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "C:\\Users\\Scarlett\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lualine.nvim",

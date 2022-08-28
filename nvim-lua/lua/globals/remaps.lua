@@ -18,7 +18,7 @@ vim.keymap.set('n', '<leader>rr', "<cmd>so %<cr>", options)
 -- deselect matching string after search
 vim.keymap.set('n', '<leader>.', "<cmd>noh<cr>", options)
 
--- barbar buffers
+-- navigate buffers
 vim.keymap.set('n', '<leader>1', "<cmd>BufferPrevious<cr> <cmd>cd %:h<cr>", options)
 vim.keymap.set('n', '<leader>2', "<cmd>BufferNext<cr> <cmd>cd %:h<cr>", options)
 vim.keymap.set('n', '<leader>bd', "<cmd>BufferClose!<cr>", options)
@@ -26,7 +26,7 @@ vim.keymap.set('n', '<leader>bp', "<cmd>BufferPin<cr>", options)
 vim.keymap.set('n', '<leader><', "<cmd>BufferMovePrevious<cr>", options)
 vim.keymap.set('n', '<leader>>', "<cmd>BufferMoveNext<cr>", options)
 
-vim.keymap.set('n', '<leader>n', "<CMD>NERDTree<CR>'", options)
+vim.keymap.set('n', '<leader>n', "<CMD>NvimTreeOpen<CR>'", options)
 
 -- files
 -- open File Explorer in the current dir
@@ -36,3 +36,4 @@ else
     -- windows path
     vim.keymap.set('n', '<leader>f.', "<cmd>!start explorer /select,%:p<cr>", options)
 end
+
