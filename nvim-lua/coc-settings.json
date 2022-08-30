@@ -1,0 +1,4 @@
+{
+    "pyright.enable": true,
+"    python.jediEnabled": false
+}

@@ -3,8 +3,9 @@ return require('packer').startup(function(use)
     -- packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- colorscheme
+    -- colorschemes
     use 'tiagovla/tokyodark.nvim'
+    use { "EdenEast/nightfox.nvim", tag = "v1.0.0" }
 
     use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate"}
 
@@ -20,14 +21,13 @@ return require('packer').startup(function(use)
 
     use {'junegunn/fzf', run = "fzf#install()"}
 
-    -- use 'preservim/nerdtree'
-
     use {
-      'kyazdani42/nvim-tree.lua',
-      requires = {
-	'kyazdani42/nvim-web-devicons', -- optional, for file icons
-      },
-      tag = 'nightly' -- optional, updated every week. (see issue #1193)
+	'kyazdani42/nvim-tree.lua',
+	requires = {
+	    'kyazdani42/nvim-web-devicons',
+	},
     }
+
+    use 'mhinz/vim-startify'
 
 end)
