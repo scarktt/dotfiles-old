@@ -5,11 +5,9 @@ vim.o.sw = 4
 vim.o.clipboard = "unnamedplus"
 vim.o.relativenumber = true
 vim.o.number = true
--- vim.o.formatoptions -= "cro"
 vim.o.backupdir = "~/.cache/vim"
 vim.o.mouse = "v"
 vim.o.mouse = "a"
--- vim.o.noshowmode = true
 vim.o.encoding = "UTF-8"
 vim.o.guifont = "*"
 vim.o.shiftwidth = 4
@@ -27,3 +25,7 @@ vim.opt.listchars = {
 }
 vim.o.list = true
 vim.o.pyx = 3
+vim.opt.termguicolors = true
+vim.opt.list = true
+vim.opt.listchars = { space = '⋅', tab = '>~', eol = '↴' }
+vim.opt.guifont = { "Dank Mono", "h12" }
