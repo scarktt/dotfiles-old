@@ -1,9 +1,9 @@
 
 return require('packer').startup(function(use)
-    -- packer can manage itself
+    -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- colorschemes
+    -- Colorschemes
     use 'tiagovla/tokyodark.nvim'
     use { "EdenEast/nightfox.nvim", tag = "v1.0.0" }
 
@@ -21,6 +21,7 @@ return require('packer').startup(function(use)
 
     use {'junegunn/fzf', run = "fzf#install()"}
 
+    -- General
     use {
 	'kyazdani42/nvim-tree.lua',
 	requires = {
@@ -29,5 +30,8 @@ return require('packer').startup(function(use)
     }
 
     use 'mhinz/vim-startify'
+
+    -- Code
+    use 'preservim/nerdcommenter'
 
 end)

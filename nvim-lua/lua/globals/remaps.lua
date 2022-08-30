@@ -32,6 +32,10 @@ vim.keymap.set('n', '<leader>n', "<cmd>NvimTreeToggle<cr>", options)
 -- startify
 vim.keymap.set('n', '<leader>gh', "<cmd><cr>", options)
 
+-- nerdcomenter
+vim.keymap.set('n', '<C-_>', "<Plug>NERDCommenterToggle", options)
+vim.keymap.set('n', '<C-_>', "<Plug>NERDCommenterToggle<CR>gv", options)
+
 -- files
 -- open File Explorer in the current dir
 if string.find(os_name, "linux") then
