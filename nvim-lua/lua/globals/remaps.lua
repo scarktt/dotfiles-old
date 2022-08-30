@@ -26,7 +26,11 @@ vim.keymap.set('n', '<leader>bp', "<cmd>BufferPin<cr>", options)
 vim.keymap.set('n', '<leader><', "<cmd>BufferMovePrevious<cr>", options)
 vim.keymap.set('n', '<leader>>', "<cmd>BufferMoveNext<cr>", options)
 
-vim.keymap.set('n', '<leader>n', "<CMD>NvimTreeOpen<CR>'", options)
+-- nvim-tree
+vim.keymap.set('n', '<leader>n', "<cmd>NvimTreeToggle<cr>", options)
+
+-- startify
+vim.keymap.set('n', '<leader>gh', "<cmd><cr>", options)
 
 -- files
 -- open File Explorer in the current dir
