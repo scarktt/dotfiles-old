@@ -10,7 +10,7 @@ end
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
-require("nvim-tree").setup({
+nvim_tree.setup({
   hijack_directories = {
     enable = false,
   },
@@ -92,6 +92,11 @@ require("nvim-tree").setup({
     enable = true,
     ignore = true,
     timeout = 500,
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+    }
   },
   view = {
     width = 30,
