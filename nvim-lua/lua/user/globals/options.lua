@@ -1,10 +1,10 @@
+vim.o.backup = false 
 vim.o.wrap = true
 vim.o.textwidth = 79
 vim.o.formatoptions = "qrn1"
 vim.o.clipboard = "unnamedplus"
 vim.o.relativenumber = true
 vim.o.number = true
-vim.o.backupdir = ".cache/vim"
 vim.o.mouse = "v"
 vim.o.mouse = "a"
 vim.o.encoding = "UTF-8"
@@ -29,6 +29,5 @@ vim.cmd [[autocmd FileType lua setlocal shiftwidth=2 tabstop=2]]
 vim.cmd [[autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4]]
 --vim.cmd [[au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})]]
 
---vim.g.did_load_filetypes = 1
---vim.g.loaded_python_provider = 0
---vim.g['python3_host_prog'] = "~/AppData/Local/Programs/Python/Python36/python.exe"  
+vim.g.did_load_filetypes = 1
+vim.g['python3_host_prog'] = "C:/Users/Scarlett/AppData/Local/Programs/Python/Python39/python.exe"  

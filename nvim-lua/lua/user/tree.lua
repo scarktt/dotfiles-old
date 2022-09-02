@@ -117,3 +117,7 @@ nvim_tree.setup({
   },
 })
 
+-- Keybindings
+-- nvim-tree
+vim.keymap.set('n', '<leader>n', "<cmd>NvimTreeToggle<cr>", options)
+

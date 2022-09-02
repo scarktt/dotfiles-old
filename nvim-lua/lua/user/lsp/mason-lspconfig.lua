@@ -17,6 +17,7 @@ if not lspconfig_status_ok then
 end
 
 mason.setup({
+	ensure_installed = { "lua-language-server" },
 	ui = {
 		icons = {
 			package_installed = "✓",
@@ -25,16 +26,18 @@ mason.setup({
 		}
 	}
 })
+
 require("mason-lspconfig").setup()
+
 require("mason-lspconfig").setup_handlers {
 		function (server_name) -- default handler (optional)
 				lsp_config[server_name].setup {
-						on_attach = require("lsp.handlers").on_attach,
-						capabilities = require("lsp.handlers").capabilities,
+						on_attach = require("user.lsp.handlers").on_attach,
+						capabilities = require("user.lsp.handlers").capabilities,
 						root_dir = function()
 							return vim.fn.getcwd()
 						end,
-						autostart = false,
+						--autostart = false,
 				}
 		end
 }

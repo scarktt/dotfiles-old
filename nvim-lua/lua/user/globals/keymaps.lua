@@ -27,23 +27,8 @@ vim.keymap.set('n', '<leader>rr', "<cmd>luafile %<cr>", options)
 -- deselect matching string after search
 vim.keymap.set('n', '<leader>.', "<cmd>noh<cr>", options)
 
--- navigate buffers
-vim.keymap.set('n', '<leader>1', "<cmd>BufferPrevious<cr> <cmd>cd %:h<cr>", options)
-vim.keymap.set('n', '<leader>2', "<cmd>BufferNext<cr> <cmd>cd %:h<cr>", options)
-vim.keymap.set('n', '<leader>bd', "<cmd>BufferClose!<cr>", options)
-vim.keymap.set('n', '<leader>bp', "<cmd>BufferPin<cr>", options)
-vim.keymap.set('n', '<leader><', "<cmd>BufferMovePrevious<cr>", options)
-vim.keymap.set('n', '<leader>>', "<cmd>BufferMoveNext<cr>", options)
-
--- nvim-tree
-vim.keymap.set('n', '<leader>n', "<cmd>NvimTreeToggle<cr>", options)
-
 -- startify
-vim.keymap.set('n', '<leader>gh', "<cmd><cr>", options)
-
--- nerdcomenter
-vim.keymap.set('n', '<C-_>', "<Plug>NERDCommenterToggle", options)
-vim.keymap.set('v', '<C-_>', "<Plug>NERDCommenterToggle<CR>gv", options)
+-- vim.keymap.set('n', '<leader>gh', "<cmd><cr>", options)
 
 -- files
 -- open File Explorer in the current dir

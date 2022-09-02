@@ -1,5 +1,9 @@
+local nightfox_status_ok, nightfox = pcall(require, 'nightfox')
+if not nightfox_status_ok then
+  return
+end
 
-require('nightfox').setup({
+nightfox.setup({
   options = {
     transparent = false,
     terminal_colors = true,

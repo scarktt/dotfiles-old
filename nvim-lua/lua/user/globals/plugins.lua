@@ -39,34 +39,40 @@ packer.init({
 })
 
 return packer.startup(function(use)
-	-- Packer can manage itself
-	use 'wbthomason/packer.nvim'
+	use( "wbthomason/packer.nvim")
+
+	use 'nathom/filetype.nvim'
+	use 'lewis6991/impatient.nvim'
 
 	-- Colorschemes
 	use 'tiagovla/tokyodark.nvim'
 	use { "EdenEast/nightfox.nvim", tag = "v1.0.0" }
 
+	-- Treesitter for lnaguage highlighting
 	use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate"}
 
+	-- Icons
 	use 'kyazdani42/nvim-web-devicons'
 
-	use 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-	-- Tabline & Statusline
-	use 'nvim-lualine/lualine.nvim'
+	-- Barbar for buffers navigation and tabline
 	use 'romgrk/barbar.nvim'
 
+	-- Luanine for statusline
+	use 'nvim-lualine/lualine.nvim'
+
+	-- Indent blankline for indentation guides
 	use 'lukas-reineke/indent-blankline.nvim'
 
+	-- fzf for file search and much more
 	use {'junegunn/fzf', run = "fzf#install()"}
 
-	-- General
+	-- Nvim tree for file explorer within nvim
 	use 'kyazdani42/nvim-tree.lua'
-	
-	use 'mhinz/vim-startify'
 
-	-- Code
-	use 'preservim/nerdcommenter'
+	-- use 'mhinz/vim-startify'
+
+	-- Commenter
+	use "terrortylor/nvim-comment"
 
 	-- LSP
 	use {
@@ -77,21 +83,39 @@ return packer.startup(function(use)
 	}
 
 	-- Completion
-	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-	use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-	use 'hrsh7th/cmp-buffer'
-	use 'hrsh7th/cmp-path'
-	use 'hrsh7th/cmp-cmdline'
-	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-	use 'L3MON4D3/LuaSnip' -- Snippets plugin
-	use 'onsails/lspkind-nvim'
-	use 'ray-x/lsp_signature.nvim'
+	use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      {
+        "L3MON4D3/LuaSnip",
+        requires = { "rafamadriz/friendly-snippets" },
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+      },
+      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+    },
+    config = [[require('user.cmp')]],
+    event = 'InsertEnter *',
+  }
+
+  use {
+    'onsails/lspkind-nvim',
+    config = function()
+      require("lspkind").init()
+    end,
+  }
+
+  use 'ray-x/lsp_signature.nvim'
 
 	use {
 		"windwp/nvim-autopairs",
 		config = function() require("nvim-autopairs").setup {} end
 	}
-
+	
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
