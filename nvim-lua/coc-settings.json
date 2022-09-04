@@ -1,4 +1,13 @@
 {
+    "diagnostic.errorSign": "",
+    "diagnostic.warningSign": "",
+    "diagnostic.infoSign": "",
     "pyright.enable": true,
-"    python.jediEnabled": false
+    "python.jediEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "jedi.jediSettings.autoImportModules": ["numpy", "pandas"],
+    "diagnostic-languageserver.filetypes": {
+	"python": "flake8"
+    }
 }
