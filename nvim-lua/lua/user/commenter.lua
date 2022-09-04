@@ -10,3 +10,5 @@ nvim_comment.setup({
 
 local options = { noremap = true, silent = true }
 vim.keymap.set('n', '<C-_>', "<cmd>CommentToggle<cr>", options)
+
+vim.keymap.set("n", "<leader>t", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)

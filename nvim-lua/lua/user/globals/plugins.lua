@@ -43,10 +43,20 @@ return packer.startup(function(use)
 
 	use 'nathom/filetype.nvim'
 	use 'lewis6991/impatient.nvim'
+  use { "nvim-lua/plenary.nvim", module = "plenary" }
 
 	-- Colorschemes
 	use 'tiagovla/tokyodark.nvim'
 	use { "EdenEast/nightfox.nvim", tag = "v1.0.0" }
+	use 'xiyaowong/nvim-transparent'
+
+	use { 
+		'neoclide/coc.nvim',
+		branch = 'release',
+		config = function()
+			vim.cmd [[let b:coc_suggest_disable = 1]]
+		end
+	}
 
 	-- Treesitter for lnaguage highlighting
 	use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate"}
@@ -64,59 +74,82 @@ return packer.startup(function(use)
 	use 'lukas-reineke/indent-blankline.nvim'
 
 	-- fzf for file search and much more
-	use {'junegunn/fzf', run = "fzf#install()"}
+	-- use {'junegunn/fzf', run = "fzf#install()"}
 
 	-- Nvim tree for file explorer within nvim
 	use 'kyazdani42/nvim-tree.lua'
-
-	-- use 'mhinz/vim-startify'
 
 	-- Commenter
 	use "terrortylor/nvim-comment"
 
 	-- LSP
-	use {
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"neovim/nvim-lspconfig",
-		"williamboman/nvim-lsp-installer",
-	}
+    -- use 'neovim/nvim-lspconfig'
+	-- use {
+	-- 	"williamboman/mason.nvim",
+	-- 	"williamboman/mason-lspconfig.nvim",
+	-- 	"neovim/nvim-lspconfig",
+	-- 	"williamboman/nvim-lsp-installer",
+	-- }
 
 	-- Completion
-	use {
-    'hrsh7th/nvim-cmp',
-    requires = {
-      'hrsh7th/cmp-nvim-lsp',
-      {
-        "L3MON4D3/LuaSnip",
-        requires = { "rafamadriz/friendly-snippets" },
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-      },
-      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-    },
-    config = [[require('user.cmp')]],
-    event = 'InsertEnter *',
-  }
+-- 	use {
+--     'hrsh7th/nvim-cmp',
+--     requires = {
+--       'hrsh7th/cmp-nvim-lsp',
+--       {
+--         "L3MON4D3/LuaSnip",
+--         requires = { "rafamadriz/friendly-snippets" },
+--         config = function()
+--           require("luasnip.loaders.from_vscode").lazy_load()
+--         end,
+--       },
+--       { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+--       { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+--       { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+--     },
+--     config = [[require('user.cmp')]],
+--     event = 'InsertEnter *',
+--   }
+-- 	use {'tzachar/cmp-tabnine', after = "nvim-cmp", run='powershell ./install.ps1', requires = 'hrsh7th/nvim-cmp'}
+
+--   use {
+--     'onsails/lspkind-nvim',
+--     config = function()
+--       require("lspkind").init()
+--     end,
+--   }
+
+--   use 'ray-x/lsp_signature.nvim'
 
   use {
-    'onsails/lspkind-nvim',
+    "windwp/nvim-autopairs",
+    config = function() require("nvim-autopairs").setup {} end
+  }
+
+  -- git
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require("lspkind").init()
+      require('user.gitsigns')
     end,
   }
 
-  use 'ray-x/lsp_signature.nvim'
 
-	use {
-		"windwp/nvim-autopairs",
-		config = function() require("nvim-autopairs").setup {} end
-	}
+  use {
+    "nvim-telescope/telescope.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require('user.telescope')
+    end,
+  }
+
+  use {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
+  }
 	
-	if PACKER_BOOTSTRAP then
-		require("packer").sync()
-	end
+  if PACKER_BOOTSTRAP then
+      require("packer").sync()
+  end
 end)

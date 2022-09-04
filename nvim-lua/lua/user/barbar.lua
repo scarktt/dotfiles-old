@@ -9,8 +9,8 @@ bufferline.setup {
   tabpages = true,
   closable = true,
   clickable = true,
-  exclude_ft = {'javascript'},
-  exclude_name = {'package.json'},
+  exclude_ft = {''},
+  exclude_name = {''},
   icons = true,
   icon_custom_colors = false,
 
@@ -42,6 +42,6 @@ bufferline.setup {
 vim.keymap.set('n', '<leader>1', "<cmd>BufferPrevious<cr> <cmd>cd %:h<cr>", options)
 vim.keymap.set('n', '<leader>2', "<cmd>BufferNext<cr> <cmd>cd %:h<cr>", options)
 vim.keymap.set('n', '<leader>bd', "<cmd>BufferClose!<cr>", options)
-vim.keymap.set('n', '<leader>bp', "<cmd>BufferPin<cr>", options)
+vim.keymap.set('n', '<leader>bj', "<cmd>BufferPick<cr>", options)
 vim.keymap.set('n', '<leader><', "<cmd>BufferMovePrevious<cr>", options)
 vim.keymap.set('n', '<leader>>', "<cmd>BufferMoveNext<cr>", options)
