@@ -53,9 +53,11 @@ return packer.startup(function(use)
 	use { 
 		'neoclide/coc.nvim',
 		branch = 'release',
-		config = function()
-			vim.cmd [[let b:coc_suggest_disable = 1]]
-		end
+        config = [[require('user.coc')]],
+		-- config = function()
+          -- enable this is you are using another autocompletion plugin/tool
+          -- 	vim.cmd [[let b:coc_suggest_disable = 1]]
+		-- end
 	}
 
 	-- Treesitter for lnaguage highlighting
@@ -148,6 +150,12 @@ return packer.startup(function(use)
     "nvim-telescope/telescope-fzf-native.nvim",
     run = "make",
   }
+
+  use {'glepnir/dashboard-nvim'}
+
+  use 'rcarriga/nvim-notify'
+
+  use 'preservim/tagbar'
 	
   if PACKER_BOOTSTRAP then
       require("packer").sync()
