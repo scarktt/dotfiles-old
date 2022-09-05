@@ -9,6 +9,7 @@
 vim.g.mapleader = ' '
 
 local options = { noremap = true, silent = true }
+local exp_options = { noremap = true, silent = true, expr=true }
 local os_name = os.execute('uname -a')
 
 -- Normal --
