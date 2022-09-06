@@ -155,8 +155,20 @@ return packer.startup(function(use)
 
   use 'rcarriga/nvim-notify'
 
-  use 'preservim/tagbar'
-	
+  use {
+    'preservim/tagbar',
+    config = [[require('user.tagbar')]],
+  }
+  
+  use 'kdheepak/lazygit.nvim'
+
+  use {
+    'mattn/emmet-vim',
+    config = [[require('user.emmet')]],
+  }
+
+  use "ahmedkhalf/project.nvim"
+
   if PACKER_BOOTSTRAP then
       require("packer").sync()
   end

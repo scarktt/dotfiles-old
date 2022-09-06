@@ -12,6 +12,7 @@ require('user.barbar')
 require('user.indent-blankline')
 require('user.lualine')
 require('user.notify')
+require('user.project')
 require('user.tree')
 require('user.treesitter')
 
