@@ -76,6 +76,9 @@ keymap("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
 keymap("n", "gi", "<Plug>(coc-implementation)", { silent = true })
 keymap("n", "gr", "<Plug>(coc-references)", { silent = true })
 
+-- rename current variable
+keymap("n", "<F2>", "<Plug>(coc-rename)", { silent = true })
+
 
 -- Use K to show documentation in preview window.
 function Show_documentation()
@@ -110,5 +113,4 @@ keymap("n", "<leader>o", ":<C-u>CocList outline<CR>", opts)
 vim.api.nvim_create_user_command("Format", ":call CocAction('format')", { nargs = 0 })
 
 -- Add `:OR` command for organize imports of the current buffer.
-vim.api.nvim_create_user_command("OI", ":call CocActionAsync('runCommand', 'editor.action.organizeImport')",
-    { nargs = 0 })
+vim.api.nvim_create_user_command("OI", ":call CocActionAsync('runCommand', 'editor.action.organizeImport')", { nargs = 0 })
