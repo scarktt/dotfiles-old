@@ -9,6 +9,7 @@
 vim.g.mapleader = ' '
 
 local options = { noremap = true, silent = true }
+local exp_options = { noremap = true, silent = true, expr=true }
 local os_name = os.execute('uname -a')
 
 -- Normal --
@@ -35,10 +36,10 @@ vim.keymap.set('n', '<c-h>', "<cmd>wincmd h<cr>", options)
 vim.keymap.set('n', '<c-l>', "<cmd>wincmd l<cr>", options)
 
 -- resize window
-vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", opts)
-vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", opts)
-vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", options)
+vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", options)
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", options)
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", options)
 
 -- split window
 vim.keymap.set('n', '<leader>wh', "<cmd>split<cr>", options)
