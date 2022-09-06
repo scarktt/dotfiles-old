@@ -53,6 +53,7 @@ telescope.setup {
 }
 
 telescope.load_extension("fzf")
+telescope.load_extension("projects")
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<Leader>ff', '<cmd>Telescope find_files<cr>', opts)
