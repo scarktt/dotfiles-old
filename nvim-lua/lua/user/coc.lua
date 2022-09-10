@@ -17,6 +17,7 @@ vim.g["coc_global_extensions"] = {
     "coc-sumneko-lua"
 }
 
+
 -- highlight
 -- for custom pop menu
 vim.highlight.create("CocCustomPopup", { guifg = "#ebdbb2", guibg = "#282828" })
@@ -114,3 +115,5 @@ vim.api.nvim_create_user_command("Format", ":call CocAction('format')", { nargs 
 
 -- Add `:OR` command for organize imports of the current buffer.
 vim.api.nvim_create_user_command("OI", ":call CocActionAsync('runCommand', 'editor.action.organizeImport')", { nargs = 0 })
+
+vim.cmd [[autocmd FileType * let b:coc_suggest_disable = 1]]
