@@ -7,7 +7,8 @@ if ($host.Name -eq 'ConsoleHost')
 }
 
 Import-Module -Name Terminal-Icons
-$theme = "C:\Users\Scarlett\AppData\Local\Programs\oh-my-posh\themes\dango.json"
+# $theme = "C:\Users\Scarlett\AppData\Local\Programs\oh-my-posh\themes\dango.json"
+$theme = "C:\Users\Scarlett\AppData\Local\Programs\oh-my-posh\themes\half-life.omp.json"
 
 oh-my-posh --init --shell pwsh --config $theme | Invoke-Expression
 
@@ -714,7 +715,7 @@ Invoke-Expression (& {
 })
 
 # Nvim
-function Open-Nvim { & nvim $args }
+function Open-Nvim { & nvim -p $args }
 New-Alias -Name vi -Value Open-Nvim
 
 # Git Aliases
